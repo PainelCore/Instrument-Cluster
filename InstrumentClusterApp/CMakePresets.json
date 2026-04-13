@@ -1,0 +1,36 @@
+{
+  "version": 3,
+  "configurePresets": [
+    {
+      "name": "desktop",
+      "displayName": "Desktop (Windows/Linux - Mock CAN)",
+      "description": "Build for local development with mock CAN data",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build_desktop",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug"
+      }
+    },
+    {
+      "name": "pi-cross",
+      "displayName": "Raspberry Pi Zero 2W (Cross-compile)",
+      "description": "Build for Pi using Buildroot toolchain",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build_pi",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "MinSizeRel",
+        "CMAKE_TOOLCHAIN_FILE": "$env{HOME}/BUILDROOT_PIZERO2W/buildroot/output/host/share/buildroot/toolchainfile.cmake"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "desktop",
+      "configurePreset": "desktop"
+    },
+    {
+      "name": "pi-cross",
+      "configurePreset": "pi-cross"
+    }
+  ]
+}

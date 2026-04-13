@@ -1,0 +1,8 @@
+<!DOCTYPE RCC>
+<RCC version="1.0">
+    <qresource prefix="/fonts">
+        <file>fonts/DejaVuSans.ttf</file>
+        <file>fonts/DejaVuSans-Bold.ttf</file>
+        <file>images/boot_logo.png</file>
+    </qresource>
+</RCC>

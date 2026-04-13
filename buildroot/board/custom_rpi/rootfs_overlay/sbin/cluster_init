@@ -1,0 +1,51 @@
+#!/bin/sh
+mount -t proc proc /proc
+mount -t sysfs sysfs /sys
+mount -t devtmpfs devtmpfs /dev
+
+# Mount writable RAM disks for temp and lock files
+mount -t tmpfs tmpfs /tmp
+mount -t tmpfs tmpfs /run
+
+# Create the lock directory and give it open permissions
+mkdir -p /run/lock
+chmod 777 /tmp /run /run/lock
+
+mount -t tmpfs tmpfs /var/lock 2>/dev/null
+chmod 777 /var/lock 2>/dev/null
+# ----------------------------------------------
+
+/sbin/mdev -s
+
+# Show splash image immediately - appears before Linux even finishes booting
+if [ -f /usr/share/cluster/splash.raw ]; then
+    dd if=/usr/share/cluster/splash.raw \
+       of=/dev/fb0 \
+       bs=4096 2>/dev/null || true
+else
+    cat /dev/zero > /dev/fb0 2>/dev/null || true
+fi
+
+# CAN setup deferred in background
+(
+    sleep 2
+    /sbin/ip link set can0 type can bitrate 500000 restart-ms 10
+    /sbin/ip link set can0 txqueuelen 1000
+    /sbin/ip link set can0 up
+) &
+
+chrt -f -p 80 $(pgrep -f "spi0")
+echo performance > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+
+export QT_QPA_PLATFORM=linuxfb
+export QT_QPA_PLATFORM_PLUGIN_PATH=/usr/lib/qt/plugins/platforms
+export QT_QPA_FONTDIR=/usr/lib/fonts
+
+# Disable VSync and enable memory mapping for the framebuffer
+export QT_QPA_FB_DISABLE_VSYNC=1
+export QT_QPA_FB_FORCE_FULL_REDRAW=0
+export QT_QPA_FB_BUFFERED=1
+
+exec /usr/bin/ClusterApp
+# Set Real-Time priority for the app
+chrt -rr 99 /usr/bin/ClusterApp &

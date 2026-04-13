@@ -1,0 +1,1 @@
+root=/dev/mmcblk0p2 rootwait ro rootfstype=ext4 console=tty3 quiet loglevel=0 logo.nologo vt.global_cursor_default=0 init=/sbin/cluster_init

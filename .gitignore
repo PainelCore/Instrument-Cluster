@@ -1,0 +1,49 @@
+# =========================
+# Buildroot
+# =========================
+# Generated output and downloads — too large for git
+buildroot/output/
+buildroot/dl/
+buildroot/O/
+
+# =========================
+# InstrumentClusterApp (Qt / C++)
+# =========================
+# Specific build artifacts
+InstrumentClusterApp/build_desktop/
+InstrumentClusterApp/build_pi/
+
+# Qt generated files
+*.autosave
+*_autogen/
+*.qmlc
+*.jsc
+
+# C++ compiled objects and artifacts
+*.o
+*.obj
+*.so
+*.a
+*.dll
+*.exe
+CMakeCache.txt
+CMakeFiles/
+Makefile
+
+# =========================
+# OS & Editor Files
+# =========================
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# IDEs (VS Code, JetBrains, etc.)
+.vscode/
+.idea/
+*.swp
