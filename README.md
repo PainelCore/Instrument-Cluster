@@ -1,4 +1,4 @@
-# EmbeddedInstrumentCluster
+# Instrument Cluster
 
 A custom digital instrument cluster built for the **Raspberry Pi Zero 2W**, designed to replace my car's analog dashboard. The system boots directly into a Qt5 application via a minimal custom Linux OS built with Buildroot — no desktop environment, no systemd, sub-6 second boot time.
 
